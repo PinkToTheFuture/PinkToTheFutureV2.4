@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 import com.vuforia.HINT;
 import com.vuforia.Vuforia;
 
@@ -312,6 +313,33 @@ public class VuforiaOmniBlue extends LinearOpMode {
             idle();
         }
 
+        //use drive algorithm to translate coordinates into movement
+
+//        while (opModeIsActive()) {
+//            if ((gamepad1.left_stick_y + gamepad1.left_stick_x) > (gamepad1.right_stick_x + gamepad1.right_stick_y)){
+//                //X & Y modus
+//                //LEFT STICK
+//               RFpower = ((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
+//                RBpower = ((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
+//                LFpower = ((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
+//                LBpower = ((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
+//
+//            }
+//
+//            if ((gamepad1.right_stick_x + gamepad1.right_stick_y) > (gamepad1.left_stick_y + gamepad1.left_stick_x)){
+//                //TURN modus
+//                //RIGHT STICK
+//                RFpower = gamepad1.right_stick_x;
+//                RBpower = gamepad1.right_stick_x;
+//                LFpower = -gamepad1.right_stick_x;
+//                LBpower = -gamepad1.right_stick_x;
+//            }
+//
+//            LFdrive.setPower(Range.clip((LFpower * fastency), -1, 1));
+//            RBdrive.setPower(Range.clip((RBpower * fastency), -1, 1));
+//            LBdrive.setPower(Range.clip((LBpower * fastency), -1, 1));
+//            RFdrive.setPower(Range.clip((RFpower * fastency), -1, 1));
+//        }
 
         //rijden tot dat hij de beacon ziet
         LFdrive.setPower(0.2);
