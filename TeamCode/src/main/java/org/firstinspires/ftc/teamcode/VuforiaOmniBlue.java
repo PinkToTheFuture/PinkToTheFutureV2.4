@@ -33,14 +33,10 @@ public class VuforiaOmniBlue extends LinearOpMode {
     private VuforiaLocalizer.Parameters parameters;
     private VuforiaTrackables visionTargets;
     private VuforiaTrackable target_Wheels;
-    private VuforiaTrackable target_Gears;
     private VuforiaTrackable target_Legos;
-    private VuforiaTrackable target_Tools;
     private VuforiaTrackableDefaultListener listener_Wheels;
-    private VuforiaTrackableDefaultListener listener_Gears;
 
     private VuforiaTrackableDefaultListener listener_Legos;
-    private VuforiaTrackableDefaultListener listener_Tools;
 
     private OpenGLMatrix lastKnownLocation;
     private OpenGLMatrix phoneLocation;
@@ -149,13 +145,10 @@ public class VuforiaOmniBlue extends LinearOpMode {
 
         // Setup listener and inform it of phone information
         listener_Wheels = (VuforiaTrackableDefaultListener) target_Wheels.getListener();
-        listener_Tools = (VuforiaTrackableDefaultListener) target_Tools.getListener();
         listener_Legos = (VuforiaTrackableDefaultListener) target_Legos.getListener();
-        listener_Gears = (VuforiaTrackableDefaultListener) target_Gears.getListener();
+
         listener_Wheels.setPhoneInformation(phoneLocation, parameters.cameraDirection);
-        listener_Tools.setPhoneInformation(phoneLocation, parameters.cameraDirection);
         listener_Legos.setPhoneInformation(phoneLocation, parameters.cameraDirection);
-        listener_Gears.setPhoneInformation(phoneLocation, parameters.cameraDirection);
     }
 
     // Creates a matrix for determining the locations and orientations of objects
@@ -364,11 +357,6 @@ public class VuforiaOmniBlue extends LinearOpMode {
         LBdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         RBdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        //positie bereken wielen
-        //LFdrive.setTargetPosition((int)(LFdrive.getCurrentPosition()+(Math.hypot(trans.get(0), trans.get(2)+230)/100*1478.4)));
-        //RFdrive.setTargetPosition((int)(RFdrive.getCurrentPosition()+(Math.hypot(trans.get(0), trans.get(2)+230)/100*1478.4)));
-        //LBdrive.setTargetPosition((int)(LBdrive.getCurrentPosition()+(Math.hypot(trans.get(0), trans.get(2)+230)/100*1478.4)));
-        //RBdrive.setTargetPosition((int)(RBdrive.getCurrentPosition()+(Math.hypot(trans.get(0), trans.get(2)+230)/100*1478.4)));
 
         while (opModeIsActive() && LFdrive.isBusy() && RFdrive.isBusy() && LBdrive.isBusy() && RBdrive.isBusy()) {
             waitOneFullHardwareCycle();
