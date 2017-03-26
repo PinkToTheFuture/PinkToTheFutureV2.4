@@ -46,7 +46,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
 
     private float robotAngle = 0;
 
-
+    //void for forward with encoders
     public void Forward(double omw, double pwr) throws InterruptedException{
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
         DcMotor RFdrive = hardwareMap.dcMotor.get("RFdrive");
@@ -112,6 +112,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
         RBdrive.setPower(0);
     }
 
+    //void setting up vuforia
     public void setupVuforia()
     {
         final float MM_PER_INCH = 25.4f;
@@ -168,7 +169,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
 
 
 
-
+    //void for shooter
     public void shoot(double omw, double pwr) throws InterruptedException{
         DcMotor shooter = hardwareMap.dcMotor.get("shooter");
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -192,9 +193,11 @@ public class VuforiaOmniBlue extends LinearOpMode {
         shooter.setPower(0);
     }
 
+    //calculating vectors to beacon
     public VectorF navOffWall(VectorF trans, double robotAngle, VectorF offWall){
         return new VectorF((float) (trans.get(0) - offWall.get(0) * Math.sin(Math.toRadians(robotAngle)) - offWall.get(2) * Math.cos(Math.toRadians(robotAngle))), trans.get(1), (float) (trans.get(2) + offWall.get(0) * Math.cos(Math.toRadians(robotAngle)) - offWall.get(2) * Math.sin(Math.toRadians(robotAngle))));
     }
+
 
     public VectorF anglesFromTarget(VuforiaTrackableDefaultListener image){
         float [] data = image.getRawPose().getData();
@@ -261,7 +264,11 @@ public class VuforiaOmniBlue extends LinearOpMode {
         VuforiaTrackableDefaultListener wheels = (VuforiaTrackableDefaultListener) beacons.get(0).getListener();
         VuforiaTrackableDefaultListener Legos = (VuforiaTrackableDefaultListener) beacons.get(1).getListener();
 
+
+
         waitForStart();
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------Opmode starts
 
         Forward(0.5, 0.25);
         sleep(100);
@@ -271,8 +278,10 @@ public class VuforiaOmniBlue extends LinearOpMode {
         shoot(1.5, 0.5);
         sleep(100);
 
+
         visionTargets.activate();
 
+        //telemetry of what to the robot sees and where it is
         while(opModeIsActive())
         {
             // Ask the listener for the latest information on where the robot is
@@ -338,6 +347,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
             LBdrive.setPower(0.2);
             RBdrive.setPower(-0.2);
         }
+
 
         do {
             if (wheels.getPose() != null) {
