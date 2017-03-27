@@ -157,9 +157,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
     // Units are millimeters for x, y, and z, and degrees for u, v, and w
     public OpenGLMatrix createMatrix(float x, float y, float z, float u, float v, float w)
     {
-        return OpenGLMatrix.translation(x, y, z).
-                multiplied(Orientation.getRotationMatrix(
-                        AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES, u, v, w));
+        return OpenGLMatrix.translation(x, y, z).multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES, u, v, w));
     }
 
     // Formats a matrix into a readable string
@@ -340,7 +338,20 @@ public class VuforiaOmniBlue extends LinearOpMode {
 //            RBdrive.setPower(Range.clip((RBpower * fastency), -1, 1));
 //            LBdrive.setPower(Range.clip((LBpower * fastency), -1, 1));
 //            RFdrive.setPower(Range.clip((RFpower * fastency), -1, 1));
-//        }
+//
+//
+//        algorithm for location to mecanum with heading
+//              Front left = -x + y + z
+//              Front right: x + y - z
+//              Back left = x + y + z
+//              Back right = -x + y - z
+//
+//
+//
+//
+//
+//
+//           }
 
         //rijden tot dat hij de beacon ziet
         LFdrive.setPower(0.2);
