@@ -347,7 +347,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
 //              Back right = -x + y - z
 //
 //
-//                  ffgjgnkdfjgndkfjgndkjgfn
+//
 //
 //
 //
