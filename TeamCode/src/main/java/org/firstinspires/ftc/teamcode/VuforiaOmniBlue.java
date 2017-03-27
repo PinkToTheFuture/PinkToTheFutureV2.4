@@ -157,9 +157,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
     // Units are millimeters for x, y, and z, and degrees for u, v, and w
     public OpenGLMatrix createMatrix(float x, float y, float z, float u, float v, float w)
     {
-        return OpenGLMatrix.translation(x, y, z).
-                multiplied(Orientation.getRotationMatrix(
-                        AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES, u, v, w));
+        return OpenGLMatrix.translation(x, y, z).multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES, u, v, w));
     }
 
     // Formats a matrix into a readable string
@@ -317,30 +315,43 @@ public class VuforiaOmniBlue extends LinearOpMode {
         //use drive algorithm to translate coordinates into movement
 
 //        while (opModeIsActive()) {
-//            if ((gamepad1.left_stick_y + gamepad1.left_stick_x) > (gamepad1.right_stick_x + gamepad1.right_stick_y)){
+//            if ((robotY + robotX) > (robotX + robotY)){
 //                //X & Y modus
 //                //LEFT STICK
-//               RFpower = ((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
-//                RBpower = ((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
-//                LFpower = ((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
-//                LBpower = ((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
+//               RFpower = ((robotY - robotX) / 2);
+//                RBpower = ((robotY + robotX) / 2);
+//                LFpower = ((robotY - robotX) / 2);
+//                LBpower = ((robotY + robotX) / 2);
 //
 //            }
 //
-//            if ((gamepad1.right_stick_x + gamepad1.right_stick_y) > (gamepad1.left_stick_y + gamepad1.left_stick_x)){
+//            if ((robotX + robotX) > (robotY + robotX)){
 //                //TURN modus
-//                //RIGHT STICK
-//                RFpower = gamepad1.right_stick_x;
-//                RBpower = gamepad1.right_stick_x;
-//                LFpower = -gamepad1.right_stick_x;
-//                LBpower = -gamepad1.right_stick_x;
+//
+//                RFpower = robotX;
+//                RBpower = robotX;
+//                LFpower = -robotX;
+//                LBpower = -robotX;
 //            }
 //
 //            LFdrive.setPower(Range.clip((LFpower * fastency), -1, 1));
 //            RBdrive.setPower(Range.clip((RBpower * fastency), -1, 1));
 //            LBdrive.setPower(Range.clip((LBpower * fastency), -1, 1));
 //            RFdrive.setPower(Range.clip((RFpower * fastency), -1, 1));
-//        }
+//
+//
+//        algorithm for location to mecanum with heading
+//              Front left = -x + y + z
+//              Front right: x + y - z
+//              Back left = x + y + z
+//              Back right = -x + y - z
+//
+//
+//
+//
+//
+//
+//           }
 
         //rijden tot dat hij de beacon ziet
         LFdrive.setPower(0.2);
