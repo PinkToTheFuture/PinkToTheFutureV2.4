@@ -329,7 +329,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
 //
 //            if ((robotX + robotX) > (robotY + robotX)){
 //                //TURN modus
-//                //RIGHT STICK
+//
 //                RFpower = robotX;
 //                RBpower = robotX;
 //                LFpower = -robotX;
