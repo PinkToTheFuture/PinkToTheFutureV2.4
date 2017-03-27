@@ -114,7 +114,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
     }
 
     //void setting up vuforia
-    public void setupVuforia()
+    public void setupVuforia ()
     {
         final float MM_PER_INCH = 25.4f;
         final float ROBOT_WIDTH = 18*MM_PER_INCH;               // in mm
