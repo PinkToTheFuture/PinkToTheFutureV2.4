@@ -317,23 +317,23 @@ public class VuforiaOmniBlue extends LinearOpMode {
         //use drive algorithm to translate coordinates into movement
 
 //        while (opModeIsActive()) {
-//            if ((gamepad1.left_stick_y + gamepad1.left_stick_x) > (gamepad1.right_stick_x + gamepad1.right_stick_y)){
+//            if ((robotY + robotX) > (robotX + robotY)){
 //                //X & Y modus
 //                //LEFT STICK
-//               RFpower = ((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
-//                RBpower = ((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
-//                LFpower = ((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
-//                LBpower = ((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
+//               RFpower = ((robotY - robotX) / 2);
+//                RBpower = ((robotY + robotX) / 2);
+//                LFpower = ((robotY - robotX) / 2);
+//                LBpower = ((robotY + robotX) / 2);
 //
 //            }
 //
-//            if ((gamepad1.right_stick_x + gamepad1.right_stick_y) > (gamepad1.left_stick_y + gamepad1.left_stick_x)){
+//            if ((robotX + robotX) > (robotY + robotX)){
 //                //TURN modus
 //                //RIGHT STICK
-//                RFpower = gamepad1.right_stick_x;
-//                RBpower = gamepad1.right_stick_x;
-//                LFpower = -gamepad1.right_stick_x;
-//                LBpower = -gamepad1.right_stick_x;
+//                RFpower = robotX;
+//                RBpower = robotX;
+//                LFpower = -robotX;
+//                LBpower = -robotX;
 //            }
 //
 //            LFdrive.setPower(Range.clip((LFpower * fastency), -1, 1));
