@@ -194,7 +194,12 @@ public class VuforiaOmniBlue extends LinearOpMode {
 
     //calculating vectors to beacon
     public VectorF navOffWall(VectorF trans, double robotAngle, VectorF offWall){
-        return new VectorF((float) (trans.get(0) - offWall.get(0) * Math.sin(Math.toRadians(robotAngle)) - offWall.get(2) * Math.cos(Math.toRadians(robotAngle))), trans.get(1), (float) (trans.get(2) + offWall.get(0) * Math.cos(Math.toRadians(robotAngle)) - offWall.get(2) * Math.sin(Math.toRadians(robotAngle))));
+        return new VectorF((float)
+                (trans.get(0) - offWall.get(0) * Math.sin(Math.toRadians(robotAngle))
+                        - offWall.get(2) * Math.cos(Math.toRadians(robotAngle))),
+                        trans.get(1), (float) (trans.get(2) + offWall.get(0) * Math.cos(Math.toRadians(robotAngle))
+                        - offWall.get(2) * Math.sin(Math.toRadians(robotAngle))));
+
     }
 
 
@@ -318,7 +323,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
 //            if ((robotY + robotX) > (robotX + robotY)){
 //                //X & Y modus
 //                //LEFT STICK
-//               RFpower = ((robotY - robotX) / 2);
+//                RFpower = ((robotY - robotX) / 2);
 //                RBpower = ((robotY + robotX) / 2);
 //                LFpower = ((robotY - robotX) / 2);
 //                LBpower = ((robotY + robotX) / 2);
@@ -366,7 +371,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
         RFdrive.setPower(0);
         LBdrive.setPower(0);
         RBdrive.setPower(0);
-        sleep(100);
+        sleep(5000);
 
 
         //naar beacon rijden

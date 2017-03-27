@@ -91,10 +91,13 @@ public class VuforiaTelemetryLocation extends LinearOpMode
             robotAngle = Orientation.getOrientation(lastKnownLocation, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
 
             // Send information about whether the target is visible, and where the robot is
-            telemetry.addData("Tracking " + target_Gears.getName(), listener_Gears.isVisible());
-            telemetry.addData("Tracking " + target_Tools.getName(), listener_Tools.isVisible());
-            telemetry.addData("Tracking " + target_Legos.getName(), listener_Legos.isVisible());
-            telemetry.addData("Tracking " + target_Wheels.getName(), listener_Wheels.isVisible());
+            //telemetry.addData("Tracking " + target_Gears.getName(), listener_Gears.isVisible());
+            //telemetry.addData("Tracking " + target_Tools.getName(), listener_Tools.isVisible());
+            //telemetry.addData("Tracking " + target_Legos.getName(), listener_Legos.isVisible());
+            //telemetry.addData("Tracking " + target_Wheels.getName(), listener_Wheels.isVisible());
+            telemetry.addData("robotX" , robotX);
+            telemetry.addData("robotY", robotY);
+            telemetry.addData("robotAngle", robotAngle);
             telemetry.addData("Last Known Location", formatMatrix(lastKnownLocation));
 
             // Send telemetry and idle to let hardware catch up
