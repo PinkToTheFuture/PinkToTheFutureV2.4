@@ -376,7 +376,7 @@ public class VuforiaOmniBlue extends LinearOpMode {
 
         //naar beacon rijden
         VectorF angles = anglesFromTarget(wheels);
-        VectorF trans = navOffWall(wheels.getPose().getTranslation(), Math.toDegrees(angles.get(0)) - 90, new VectorF(500, 0, 0));
+        VectorF trans = navOffWall(wheels.getPose().getTranslation(), Math.toDegrees(angles.get(0)) - 90, new VectorF(500, 0, 0)); //5cm of the wall
 
         if (trans.get(0) > 0) {
             //draai links

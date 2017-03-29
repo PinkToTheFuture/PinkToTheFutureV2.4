@@ -79,6 +79,7 @@ public class VuforiaLocationTest extends LinearOpMode {
         listener_Legos.setPhoneInformation(phoneLocation, parameters.cameraDirection);
     }
 
+    //create matrix of 6 axes
     public OpenGLMatrix createMatrix(float x, float y, float z, float u, float v, float w) {
         return OpenGLMatrix.translation(x, y, z).multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES, u, v, w));
     }
@@ -159,6 +160,7 @@ public class VuforiaLocationTest extends LinearOpMode {
             telemetry.addData("robotY", robotY);
             telemetry.addData("robotAngle", robotAngle);
             telemetry.addData("Last Known Location", formatMatrix(lastKnownLocation));
+            telemetry.addData("Tracking " + target_Wheels.getName(), listener_Wheels.isVisible());
 
             // Send telemetry and idle to let hardware catch up
             telemetry.update();
@@ -172,11 +174,11 @@ public class VuforiaLocationTest extends LinearOpMode {
                     telemetry.addData("links draaien", Math.abs(wheels.getPose().getTranslation().get(0)));
                     telemetry.update();
                 } else {
-                    telemetry.addData("rechts draaien", 0);
+                    telemetry.addLine("rechts draaien");
                     telemetry.update();
                 }
             } else {
-                telemetry.addData("rechts draaien", 0);
+                telemetry.addLine("rechts draaien");
                 telemetry.update();
 
             }
