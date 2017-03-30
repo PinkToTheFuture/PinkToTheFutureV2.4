@@ -161,6 +161,7 @@ public class VuforiaLocationTest extends LinearOpMode {
             telemetry.addData("robotAngle", robotAngle);
             telemetry.addData("Last Known Location", formatMatrix(lastKnownLocation));
             telemetry.addData("Tracking " + target_Wheels.getName(), listener_Wheels.isVisible());
+            telemetry.addData("Tracking" + target_Legos.getName(), listener_Legos.isVisible());
 
             // Send telemetry and idle to let hardware catch up
             telemetry.update();
