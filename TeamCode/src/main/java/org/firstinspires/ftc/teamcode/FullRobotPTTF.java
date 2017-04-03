@@ -36,6 +36,8 @@ public class FullRobotPTTF extends LinearOpMode {
         DcMotor geleider = hardwareMap.dcMotor.get("geleider");
 
 
+
+
         //RFdrive.setDirection(DcMotorSimple.Direction.REVERSE);
         //RBdrive.setDirection(DcMotorSimple.Direction.REVERSE);
         LBdrive.setDirection(DcMotorSimple.Direction.REVERSE);

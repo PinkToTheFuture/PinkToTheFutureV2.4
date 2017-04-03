@@ -14,9 +14,7 @@ public class Full_Robot extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        double fastency = 0.5;
-        double left;
-        double right;
+        double fastency = 1;
         double SweeperPower;
         double lbsPosition;
         double rbsPosition;
@@ -25,6 +23,10 @@ public class Full_Robot extends LinearOpMode {
         double linearglidePower;
         boolean DriveDirection = true;
         double shooterServoTime = 0;
+        double LFpower = 0;
+        double LBpower = 0;
+        double RFpower = 0;
+        double RBpower = 0;
 
 
 
@@ -60,14 +62,43 @@ public class Full_Robot extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
 
         while (opModeIsActive()) {
-            left = gamepad1.right_stick_y;
-            right = gamepad1.left_stick_y;
+            waitOneFullHardwareCycle();
+
             SweeperPower = 0;
             lbsPosition = 0.8;
             rbsPosition = 0;
             shooterservoPosition = 0.8;
             linearglidePower = 0;
 
+            if (gamepad1.left_stick_x >= 0 && gamepad1.left_stick_y < 0){
+                LFpower = 1;
+                LBpower = Math.abs(gamepad1.left_stick_y) - gamepad1.left_stick_x;
+                RBpower = 1;
+                RFpower = Math.abs(gamepad1.left_stick_y) - gamepad1.left_stick_x;
+            }
+            if (gamepad1.left_stick_x > 0 && gamepad1.left_stick_y >= 0){
+                LFpower = gamepad1.left_stick_x - gamepad1.left_stick_y;
+                LBpower = -1;
+                RBpower = gamepad1.left_stick_x - gamepad1.left_stick_y;
+                RFpower = -1;
+            }
+            if (gamepad1.left_stick_x <= 0 && gamepad1.left_stick_y > 0){
+                LFpower = -1;
+                LBpower = -gamepad1.left_stick_y + Math.abs(gamepad1.left_stick_x);
+                RBpower = -1;
+                RFpower = -gamepad1.left_stick_y + Math.abs(gamepad1.left_stick_x);
+            }
+            if (gamepad1.left_stick_x < 0 && gamepad1.left_stick_y <= 0){
+                LFpower = gamepad1.left_stick_x + Math.abs(gamepad1.left_stick_y);
+                LBpower = 1;
+                RBpower = gamepad1.left_stick_x + Math.abs(gamepad1.left_stick_y);
+                RFpower = 1;
+            }
+
+            RFpower = RFpower - (gamepad1.right_stick_x);
+            RBpower = RBpower - (gamepad1.right_stick_x);
+            LFpower = LFpower + (gamepad1.right_stick_x);
+            LBpower = LBpower + (gamepad1.right_stick_x);
 
             if (gamepad1.y) linearglidePower = 1;
             if (gamepad1.a) linearglidePower = -1;
@@ -117,16 +148,14 @@ public class Full_Robot extends LinearOpMode {
             if (gamepad2.b) lbsPosition = 0;
             if (gamepad2.a) rbsPosition = 0.6;
 
-            LFdrive.setPower(left * fastency);
-            RBdrive.setPower(right * fastency);
-            LBdrive.setPower(left * fastency);
-            RFdrive.setPower(right * fastency);
+
             Sweeper.setPower(SweeperPower);
             lbs.setPosition(lbsPosition);
             rbs.setPosition(rbsPosition);
             shooter.setTargetPosition(shooterPosition);
             shooterservo.setPosition(shooterservoPosition);
             LinearGlide.setPower(linearglidePower * 0);
+
 
             telemetry.addData("shooter", shooter.getCurrentPosition());
             telemetry.update();
