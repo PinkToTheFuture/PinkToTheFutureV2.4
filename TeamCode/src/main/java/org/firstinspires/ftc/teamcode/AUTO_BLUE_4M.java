@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @Autonomous(name="Autonoom blauw 4M", group="PinktotheFuture")
+@Disabled
 public class AUTO_BLUE_4M extends LinearOpMode {
 
     public void Right(double omw, double pwr) throws InterruptedException{

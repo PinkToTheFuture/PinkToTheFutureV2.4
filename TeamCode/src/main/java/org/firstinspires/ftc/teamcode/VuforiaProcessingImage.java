@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Bitmap;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.vuforia.HINT;
@@ -31,6 +32,7 @@ import static java.lang.String.format;
  */
 
 @Autonomous(name="VuforiaOp", group="PinktotheFuture")
+@Disabled
 public class VuforiaProcessingImage extends LinearOpMode {
 
 

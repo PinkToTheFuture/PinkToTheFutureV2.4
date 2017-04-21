@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 @Autonomous(name = "VuforiaTelemetryLocation")
-
+@Disabled
 public class VuforiaTelemetryLocation extends LinearOpMode
 {
     // Variables to be used for later

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -29,7 +30,8 @@ import java.util.Vector;
  */
 
 //Autonomous beta mecanum BLUE with vuforia
-@Autonomous (name="VuforiaOmniBlue", group="PinktotheFuture")
+@Autonomous (name="Vuforia beacon push", group="PinktotheFuture")
+@Disabled
 public class VuforiaBeaconPush extends LinearOpMode {
 
 
