@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name="Full robot Omni Drive victors rijden", group="PinktotheFuture")
-@Disabled
+
 public class Drive_Robot_Omni extends LinearOpMode {
 
     @Override

@@ -28,12 +28,15 @@ public class FullRobotPTTF extends LinearOpMode {
         int shooterPosition = 0;
 
         Servo Armservo = hardwareMap.servo.get("servoarm");
+        Armservo.setPosition(0.5);
         Servo Armrelease1 = hardwareMap.servo.get("servoarmrelease1");
         Servo Armrelease2 = hardwareMap.servo.get("servoarmrelease2");
         Armrelease1.setPosition(0);
-        Armrelease2.setPosition(1);
-
+        Armrelease2.setPosition(0.9);
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
+        shooterservoX.setPosition(0.5);
+
+
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
         DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
         DcMotor LBdrive = hardwareMap.dcMotor.get("LBdrive");
@@ -108,8 +111,8 @@ public class FullRobotPTTF extends LinearOpMode {
             }
 
             if (gamepad2.back) {
-                Armrelease1.setPosition(1);
-                Armrelease2.setPosition(0);
+                Armrelease1.setPosition(0.2);
+                Armrelease2.setPosition(0.7);
             }
 
 
@@ -133,63 +136,9 @@ public class FullRobotPTTF extends LinearOpMode {
                 geleider1.setPower(0);
                 geleider2.setPower(0);
                 while (opModeIsActive() && !shootertouch.isPressed()){
-                    if (gamepad1.dpad_up)     fastency = 1;
-                    if (gamepad1.dpad_down)   fastency = 0.3;
-
-                    if (gamepad1.left_stick_x >= 0 && gamepad1.left_stick_y < 0){
-                        LFpower = 1;
-                        LBpower = Math.abs(gamepad1.left_stick_y) - gamepad1.left_stick_x;
-                        RBpower = 1;
-                        RFpower = Math.abs(gamepad1.left_stick_y) - gamepad1.left_stick_x;
-                        }
-                    if (gamepad1.left_stick_x > 0 && gamepad1.left_stick_y >= 0){
-                        LFpower = gamepad1.left_stick_x - gamepad1.left_stick_y;
-                        LBpower = -1;
-                        RBpower = gamepad1.left_stick_x - gamepad1.left_stick_y;
-                        RFpower = -1;
-                    }
-                    if (gamepad1.left_stick_x <= 0 && gamepad1.left_stick_y > 0){
-                        LFpower = -1;
-                        LBpower = -gamepad1.left_stick_y + Math.abs(gamepad1.left_stick_x);
-                        RBpower = -1;
-                        RFpower = -gamepad1.left_stick_y + Math.abs(gamepad1.left_stick_x);
-                    }
-                    if (gamepad1.left_stick_x < 0 && gamepad1.left_stick_y <= 0){
-                        LFpower = gamepad1.left_stick_x + Math.abs(gamepad1.left_stick_y);
-                        LBpower = 1;
-                        RBpower = gamepad1.left_stick_x + Math.abs(gamepad1.left_stick_y);
-                        RFpower = 1;
-                    }
-
-                    if (gamepad2.left_trigger > 0.2){
-                        sweeperPower = -gamepad2.left_trigger;
-                    }
-                    if (gamepad2.right_trigger > 0.2){
-                        sweeperPower = gamepad2.right_trigger;
-                    }
-
-                    if (gamepad2.back) {
-                        Armrelease1.setPosition(1);
-                        Armrelease2.setPosition(0);
-                    }
-
-                        //RIGHT STICK
-                    RFpower = RFpower - (gamepad1.right_stick_x);
-                    RBpower = RBpower - (gamepad1.right_stick_x);
-                    LFpower = LFpower + (gamepad1.right_stick_x);
-                    LBpower = LBpower + (gamepad1.right_stick_x);
-
-                    Range.clip(RFpower, -1, 1);
-                    Range.clip(RBpower, -1, 1);
-                    Range.clip(LFpower, -1, 1);
-                    Range.clip(LBpower, -1, 1);
-
-                    LFdrive.setPower(LFpower * fastency);
-                    RBdrive.setPower(RBpower * fastency);
-                    LBdrive.setPower(LBpower * fastency);
-                    RFdrive.setPower(RFpower * fastency);
-                    sweeper.setPower(sweeperPower);
+                    idle();
                 }
+                shooterservoX.setPosition(0.5);
             }
             if (gamepad2.y){
                 geleiderPower = 1;

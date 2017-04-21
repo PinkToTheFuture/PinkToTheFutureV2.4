@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.robotcore.hardware.LightSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -27,7 +28,7 @@ public class CaliSensors extends LinearOpMode {
         Rcolor.setI2cAddress(I2cAddr.create8bit(0x2c));
         Rcolor.enableLed(false);
 
-
+        TouchSensor shootertouch = hardwareMap.touchSensor.get("shootertouch");
 
         byte[] Lrangesensorcache;
         I2cDevice LrangeSensor = hardwareMap.i2cDevice.get("lrangesensor");
@@ -65,6 +66,7 @@ public class CaliSensors extends LinearOpMode {
 
             Lrangesensorcache = Lrangereader.read(0x04, 2);
             int Lrange = Lrangesensorcache[0] & 0xFF;
+            telemetry.addData("shootertouch", shootertouch.isPressed());
             telemetry.addData("Rultrasonic", Rrange);
             telemetry.addData("Lultrasonic", Lrange);
             telemetry.addData("gyro", gyro.getHeading());
