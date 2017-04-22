@@ -72,6 +72,9 @@ public class Drive_Robot_Omni extends LinearOpMode {
             RBdrive.setPower(RBpower * fastency);
             LBdrive.setPower(LBpower * fastency);
             RFdrive.setPower(RFpower * fastency);
+
+
+
         }
     }
 }
