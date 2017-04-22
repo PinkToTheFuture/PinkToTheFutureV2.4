@@ -56,7 +56,7 @@ public class FullRobotPTTF extends LinearOpMode {
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         idle();
         shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        shooter.setPower(0.5);
+        shooter.setPower(1);
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
@@ -148,7 +148,7 @@ public class FullRobotPTTF extends LinearOpMode {
             //
             //    while (opModeIsActive() && SchieterVar == 0){
             //        waitOneFullHardwareCycle();
-            //        shooterservoX.setPosition(0.6);
+            //        shooterservoX.setPosition(0);
             //        if (!shootertouch.isPressed() == true){
             //            SchieterVar = 1;
             //            shooterservoX.setPosition(0);
@@ -179,6 +179,8 @@ public class FullRobotPTTF extends LinearOpMode {
             if (gamepad1.right_bumper) {
                 shooterPosition = shooterPosition + 2240;
                 shooter.setTargetPosition(shooterPosition);
+                geleider1.setPower(0);
+                geleider2.setPower(0);
             }
 
             if (gamepad1.dpad_up) {
