@@ -55,8 +55,10 @@ public class FullRobotPTTF extends LinearOpMode {
 
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         idle();
+        idle();
         shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooter.setTargetPosition(0);
         shooter.setPower(-1);
 
 
@@ -138,23 +140,38 @@ public class FullRobotPTTF extends LinearOpMode {
                 }
             }
 
+            if (gamepad1.left_bumper){
+                shooterservoX.setPosition(0.15);
+                sleep(170);
+                while (opModeIsActive() && !shootertouch.isPressed()){
+                    idle();
+                }
+                shooterservoX.setPosition(0.5);
+            }
+
             if (gamepad1.right_bumper) {
                 shooterPosition = shooterPosition + 2240;
                 shooter.setTargetPosition(shooterPosition);
-                while (gamepad1.right_bumper){
+                while (opModeIsActive() && shooter.getCurrentPosition() < shooterPosition - 100){
                     idle();
                 }
+                shooterservoX.setPosition(0.15);
+                sleep(170);
+                while (opModeIsActive() && !shootertouch.isPressed()){
+                    idle();
+                }
+                shooterservoX.setPosition(0.5);
             }
 
             if (gamepad1.dpad_up) {
-                shooterPosition = shooterPosition+20;
+                shooterPosition = shooterPosition-80;
                 shooter.setTargetPosition(shooterPosition);
                 while (gamepad1.dpad_up){
                     idle();
                 }
             }
             if (gamepad1.dpad_down){
-                shooterPosition = shooterPosition-20;
+                shooterPosition = shooterPosition+80;
                 shooter.setTargetPosition(shooterPosition);
                 while (gamepad1.dpad_down){
                     idle();
@@ -185,7 +202,7 @@ public class FullRobotPTTF extends LinearOpMode {
 
 
             telemetry.addData("shooter encoder", shooter.getCurrentPosition());
-            telemetry.addData("shootertouch", shootertouch);
+            telemetry.addData("shootertouch", shootertouch.isPressed());
             telemetry.addData("shooterPosition", shooterPosition);
             telemetry.update();
 

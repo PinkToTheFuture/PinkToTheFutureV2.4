@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -287,7 +288,8 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
     }
 
     public void shoot() throws InterruptedException{
-        Servo shooterservo = hardwareMap.servo.get("shooterservox");
+        Servo shooterservoX = hardwareMap.servo.get("shooterservox");
+        TouchSensor shootertouch = hardwareMap.touchSensor.get("shootertouch");
 
         DcMotor shooter = hardwareMap.dcMotor.get("shooter");
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -303,9 +305,13 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
                 loop = false;
             }
         }
-        shooterservo.setPosition(0.7);
-        sleep(800);
-        shooterservo.setPosition(0.1);
+
+        shooterservoX.setPosition(0.15);
+        sleep(170);
+        while (opModeIsActive() && !shootertouch.isPressed()){
+            idle();
+        }
+        shooterservoX.setPosition(0.5);
 
         shooter.setTargetPosition(4480);
 
@@ -760,18 +766,18 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         init_gyro();
         waitForStart();
 
-        /*
+        ///*
         Forward(130, 0.4);
         shoot();
         Right_Gyro(44, 0.18, 0.62);
-        Forward(440, 0.4);
+        Forward(460, 0.4);
         Left_Gyro(270, 0.19, 0.55);
 
 
         FollowLeftLine(0.09, 1.9);
 
         Push();
-        */
+        //*/
         FollowWallLeft(300, 0.3, 10);
         FollowRightLine(0.09, 0.3);
     }
