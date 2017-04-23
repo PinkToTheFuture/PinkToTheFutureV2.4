@@ -56,12 +56,12 @@ public class FullRobotPTTF extends LinearOpMode {
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         idle();
         shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        shooter.setPower(1);
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooter.setPower(-1);
 
 
 
-
+        waitOneFullHardwareCycle();
         waitForStart();
         while (opModeIsActive()) {
             waitOneFullHardwareCycle();
@@ -138,76 +138,28 @@ public class FullRobotPTTF extends LinearOpMode {
                 }
             }
 
-            /** shooter code lars **/
-
-            //double SchieterVar = 0;
-            //if (gamepad2.left_bumper) {
-            //    SchieterVar = 0;
-            //    shooterPosition = 2240;
-            //    shooter.setTargetPosition(shooterPosition);
-            //
-            //    while (opModeIsActive() && SchieterVar == 0){
-            //        waitOneFullHardwareCycle();
-            //        shooterservoX.setPosition(0);
-            //        if (!shootertouch.isPressed() == true){
-            //            SchieterVar = 1;
-            //            shooterservoX.setPosition(0);
-            //            shooter.setPower(0);
-            //        }
-            //    }
-            //}
-
-
-
-
-            //shooter servo movement
-            if(gamepad2.right_bumper) {
-                shooterservoX.setPosition(0.1);
-            }
-
-            if(gamepad2.left_bumper){
-                shooterservoX.setPosition(.9);
-            }
-
-            if(!gamepad2.right_bumper ) {
-                shooterservoX.setPosition(0.5);
-            }
-            if(!gamepad2.right_bumper){
-                shooterservoX.setPosition(.5);
-            }
-
             if (gamepad1.right_bumper) {
                 shooterPosition = shooterPosition + 2240;
                 shooter.setTargetPosition(shooterPosition);
-                geleider1.setPower(0);
-                geleider2.setPower(0);
+                while (gamepad1.right_bumper){
+                    idle();
+                }
             }
 
             if (gamepad1.dpad_up) {
                 shooterPosition = shooterPosition+20;
+                shooter.setTargetPosition(shooterPosition);
+                while (gamepad1.dpad_up){
+                    idle();
+                }
             }
             if (gamepad1.dpad_down){
                 shooterPosition = shooterPosition-20;
+                shooter.setTargetPosition(shooterPosition);
+                while (gamepad1.dpad_down){
+                    idle();
+                }
             }
-
-
-            /** shooter code Viktor **/
-
-            //if (gamepad1.dpad_left){
-            //    double SchieterVar = 0;
-            //    shooterPosition = shooterPosition + 2240;
-            //    shooter.setTargetPosition(shooterPosition);
-            //    shooterservoX.setPosition(0);
-            //    geleider1.setPower(0);
-            //    geleider2.setPower(0);
-            //    while (opModeIsActive() && SchieterVar == 0){
-            //        if(!shootertouch.isPressed() == true){
-            //            SchieterVar = 1;
-            //        }
-            //        idle();
-            //    }
-            //    shooterservoX.setPosition(0.5);
-            //}
 
 
 
@@ -230,10 +182,6 @@ public class FullRobotPTTF extends LinearOpMode {
             geleider1.setPower(geleiderPower);
             geleider2.setPower(geleiderPower);
             sweeper.setPower(sweeperPower);
-            shooter.setTargetPosition(shooterPosition);
-
-
-
 
 
             telemetry.addData("shooter encoder", shooter.getCurrentPosition());
@@ -242,5 +190,6 @@ public class FullRobotPTTF extends LinearOpMode {
             telemetry.update();
 
         }
+        shooter.setPower(0);
     }
 }
