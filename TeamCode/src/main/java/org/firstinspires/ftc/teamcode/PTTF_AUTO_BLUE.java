@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
@@ -17,12 +14,10 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 @Autonomous(name = "AUTO BLUE", group = "PinktotheFuture")
 
 public class PTTF_AUTO_BLUE extends LinearOpMode {
-    public void Forward(double omw, double pwr) throws InterruptedException{
+    private void Forward(double omw, double pwr) throws InterruptedException{
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
         DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
@@ -89,7 +84,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RBdrive.setPower(0);
 
     }
-    public void Reverse(double omw, double pwr) throws InterruptedException{
+    private void Reverse(double omw, double pwr) throws InterruptedException{
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
         DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
@@ -151,7 +146,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RBdrive.setPower(0);
     }
 
-    public void Right_Gyro(double degrees, double pwr, double sloommultiplier) throws InterruptedException{
+    private void Right_Gyro(double degrees, double pwr, double sloommultiplier) throws InterruptedException{
         ModernRoboticsI2cGyro gyro = hardwareMap.get((ModernRoboticsI2cGyro.class), "gyro");
 
 
@@ -219,7 +214,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
 
         }
 
-    public void Left_Gyro(double degrees, double pwr, double sloommultiplier) throws InterruptedException{
+    private void Left_Gyro(double degrees, double pwr, double sloommultiplier) throws InterruptedException{
         ModernRoboticsI2cGyro gyro = hardwareMap.get((ModernRoboticsI2cGyro.class), "gyro");
 
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
@@ -243,7 +238,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RBdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
-        while (opModeIsActive() && (gyro.getHeading() < 180 || gyro.getHeading() > (degrees + 15))){
+        while (opModeIsActive() && (gyro.getHeading() < 180 || gyro.getHeading() > (degrees + 35))){
             RFdrive.setPower(pwr);
             RBdrive.setPower(pwr);
             LFdrive.setPower(-pwr);
@@ -277,7 +272,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RBdrive.setPower(0);
     }
 
-    public void init_gyro() throws InterruptedException{
+    private void init_gyro() throws InterruptedException{
         ModernRoboticsI2cGyro gyro = hardwareMap.get((ModernRoboticsI2cGyro.class), "gyro");
         gyro.calibrate();
         while (gyro.isCalibrating()){
@@ -287,7 +282,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         telemetry.update();
     }
 
-    public void shoot() throws InterruptedException{
+    private void shoot() throws InterruptedException{
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
         TouchSensor shootertouch = hardwareMap.touchSensor.get("shootertouch");
 
@@ -317,13 +312,13 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
 
         loop = true;
         while (loop && opModeIsActive()){
-            if (shooter.getCurrentPosition() > 4460){
+            if (shooter.getCurrentPosition() > 4200){
                 loop = false;
             }
         }
     }
 
-    public void Left_Sideways(double omw, double pwr) throws InterruptedException {
+    private void Left_Sideways(double omw, double pwr) throws InterruptedException {
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
         DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
@@ -396,7 +391,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RFdrive.setPower(0);
         RBdrive.setPower(0);
     }
-    public void Right_Sideways(double omw, double pwr) throws InterruptedException {
+    private void Right_Sideways(double omw, double pwr) throws InterruptedException {
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
         DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
@@ -470,7 +465,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RBdrive.setPower(0);
     }
 
-    public void FollowRightLine(double pwr, double Threshold) throws InterruptedException{
+    private void FollowRightLine(double pwr, double Threshold) throws InterruptedException{
         double FollowPowerFront = 0;
         double FollowPowerTurn = 0;
 
@@ -514,7 +509,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
 
         Lrangesensorcache = Lrangereader.read(0x04, 2);
         int Lrange = Lrangesensorcache[0] & 0xFF;
-        while (Lrange > 10){
+        while (Lrange > 12 && opModeIsActive()){
             Lrangesensorcache = Lrangereader.read(0x04, 2);
             Lrange = Lrangesensorcache[0] & 0xFF;
 
@@ -558,9 +553,9 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
     }
 
 
-    public void FollowLeftLine(double pwr, double Threshold) throws InterruptedException{
-        double FollowPowerFront = 0;
-        double FollowPowerTurn = 0;
+    private void FollowLeftLine(double pwr, double Threshold) throws InterruptedException{
+        double FollowPowerFront;
+        double FollowPowerTurn;
 
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
         DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
@@ -602,7 +597,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
 
         Lrangesensorcache = Lrangereader.read(0x04, 2);
         int Lrange = Lrangesensorcache[0] & 0xFF;
-        while (Lrange > 10){
+        while (Lrange > 12 && opModeIsActive()){
             Lrangesensorcache = Lrangereader.read(0x04, 2);
             Lrange = Lrangesensorcache[0] & 0xFF;
 
@@ -644,22 +639,22 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RBdrive.setPower(0);
 
     }
-    public void Push() throws InterruptedException{
+    private void Push() throws InterruptedException{
         ColorSensor Lcolor = hardwareMap.colorSensor.get("lcolor");
-        Lcolor.setI2cAddress(I2cAddr.create8bit(0x3c));
+        Lcolor.setI2cAddress(I2cAddr.create8bit(0x2c));
         ColorSensor Rcolor = hardwareMap.colorSensor.get("rcolor");
-        Rcolor.setI2cAddress(I2cAddr.create8bit(0x2c));
+        Rcolor.setI2cAddress(I2cAddr.create8bit(0x3c));
         sleep(50);
         boolean dosome = true;
         while (dosome && opModeIsActive()) {
-            if (Rcolor.red() > Rcolor.blue()) {
-                telemetry.addData("red < blue", "");
+            if (Rcolor.red() < Rcolor.blue()) {
+                telemetry.addData("red > blue", "");
                 Left_Sideways(80, 0.3);
                 Reverse(30, 0.2);
                 dosome = false;
             }
-            if (Rcolor.red() < Rcolor.blue() && dosome) {
-                telemetry.addData("red > blue", "");
+            if (Rcolor.red() > Rcolor.blue() && dosome) {
+                telemetry.addData("red < blue", "");
                 Right_Sideways(100, 0.3);
                 Reverse(30, 0.2);
                 dosome = false;
@@ -672,7 +667,9 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         }
     }
 
-    public void FollowWallLeft(double omw, double pwr, double afstand) throws InterruptedException{
+    private void FollowWallLeft(double omw, double pwr, double afstand, double threshold) throws InterruptedException{
+        ModernRoboticsI2cGyro gyro = hardwareMap.get((ModernRoboticsI2cGyro.class), "gyro");
+
         byte[] Lrangesensorcache;
         I2cDevice LrangeSensor = hardwareMap.i2cDevice.get("lrangesensor");
         I2cDeviceSynch Lrangereader;
@@ -685,6 +682,12 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         I2cDeviceSynch Rrangereader;
         Rrangereader = new I2cDeviceSynchImpl(RrangeSensor, I2cAddr.create8bit(0x28), false);
         Rrangereader.engage();
+
+
+        LightSensor Flight = hardwareMap.lightSensor.get("Flight");
+        LightSensor Blight = hardwareMap.lightSensor.get("Blight");
+        Flight.enableLed(true);
+        Blight.enableLed(true);
 
 
         double FollowPowerFront = 0;
@@ -734,9 +737,10 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
             if (Lrange > afstand) FollowPowerFront = -0.1;
             if (Lrange < afstand) FollowPowerFront = 0.1;
 
-            if (Lrange > Rrange) FollowPowerTurn = -0.15;
-            if (Lrange < Rrange) FollowPowerTurn = 0.15;
-            if (Lrange == Rrange) FollowPowerTurn = 0;
+            double tmp = gyro.getHeading();
+            if (tmp > 270) FollowPowerTurn = -0.15;
+            if (tmp < 270) FollowPowerTurn = 0.15;
+            if (tmp == 270) FollowPowerTurn = 0;
 
             //FollowPowerFront = 0;
             //FollowPowerTurn = 0;
@@ -752,13 +756,43 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
             RFdrive.setPower(-pwr + (FollowPowerFront + FollowPowerTurn));
             RBdrive.setPower(pwr + (FollowPowerFront + FollowPowerTurn));
         }
+
+        while (Flight.getRawLightDetected() < threshold && Blight.getRawLightDetected() < threshold && opModeIsActive()){
+            Rrangesensorcache = Rrangereader.read(0x04, 2);
+            int Rrange = Rrangesensorcache[0] & 0xFF;
+
+            Lrangesensorcache = Lrangereader.read(0x04, 2);
+            int Lrange = Lrangesensorcache[0] & 0xFF;
+            telemetry.addData("Rultrasonic", Rrange);
+            telemetry.addData("Lultrasonic", Lrange);
+            telemetry.addData("LFdrive", LFdrive.getCurrentPosition());
+            telemetry.addData("LBdrive", LBdrive.getCurrentPosition());
+            telemetry.addData("RFdrive", RFdrive.getCurrentPosition());
+            telemetry.addData("RBdrive", RBdrive.getCurrentPosition());
+            telemetry.update();
+
+            if (Lrange > afstand ) FollowPowerFront = -0.1;
+            if (Lrange < afstand ) FollowPowerFront = 0.1;
+
+            if (Lrange > Rrange) FollowPowerTurn = -0.09;
+            if (Lrange < Rrange) FollowPowerTurn = 0.09;
+            if (Lrange == Rrange) FollowPowerTurn = 0;
+
+            double pwrmultiplier = 0.2;
+            LFdrive.setPower(pwr * pwrmultiplier + (FollowPowerFront - FollowPowerTurn));
+            LBdrive.setPower(-pwr * pwrmultiplier + (FollowPowerFront - FollowPowerTurn));
+            RFdrive.setPower(-pwr * pwrmultiplier + (FollowPowerFront + FollowPowerTurn));
+            RBdrive.setPower(pwr * pwrmultiplier + (FollowPowerFront + FollowPowerTurn));
+        }
+
+
         LFdrive.setPower(0);
         LBdrive.setPower(0);
         RFdrive.setPower(0);
         RBdrive.setPower(0);
 
     }
-    public void DriveToLineRight(double pwr, double threshold) throws InterruptedException{
+    private void DriveToLineRight(double pwr, double threshold) throws InterruptedException{
         boolean loop = true;
 
         LightSensor Flight = hardwareMap.lightSensor.get("Flight");
@@ -810,25 +844,26 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
     }
 
     @Override public void runOpMode() throws InterruptedException {
+        double threshold = 1.9;
+
 
         init_gyro();
         waitForStart();
-        ///*
+
         Forward(130, 0.4);
         shoot();
-        Right_Gyro(46, 0.18, 0.62);
-        Forward(490, 0.5);
-        Left_Gyro(270, 0.19, 0.57);
+        Right_Gyro(46, 0.18, 0.61);
+        Forward(483, 0.5);
+        Left_Gyro(270, 0.29, 0.47);
 
+        DriveToLineRight(0.28, threshold);
 
-
-        DriveToLineRight(0.29, 1.9);
-
-        FollowLeftLine(0.09, 1.9);
+        FollowLeftLine(0.09, threshold);
 
         Push();
 
-        FollowWallLeft(550, 0.4, 20);
+        FollowWallLeft(420, 0.45, 15, threshold);
         FollowRightLine(0.09, 0.3);
+        Push();
     }
 }
