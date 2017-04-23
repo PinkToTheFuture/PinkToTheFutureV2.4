@@ -706,9 +706,9 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         idle();
         LFdrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LBdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RFdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RBdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LBdrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RFdrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RBdrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         idle();
 
@@ -731,14 +731,15 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
             telemetry.addData("RBdrive", RBdrive.getCurrentPosition());
             telemetry.update();
 
-            if (Lrange > afstand) FollowPowerFront = -0.2;
-            if (Lrange < afstand) FollowPowerFront = 0.2;
+            if (Lrange > afstand) FollowPowerFront = -0.1;
+            if (Lrange < afstand) FollowPowerFront = 0.1;
 
-            if (Lrange > Rrange) FollowPowerTurn = -0.2;
-            if (Lrange < Rrange) FollowPowerTurn = 0.2;
+            if (Lrange > Rrange) FollowPowerTurn = -0.1;
+            if (Lrange < Rrange) FollowPowerTurn = 0.1;
+            if (Lrange == Rrange) FollowPowerTurn = 0;
 
-            FollowPowerFront = 0;
-
+            //FollowPowerFront = 0;
+            //FollowPowerTurn = 0;
 
             if (LFdrive.getCurrentPosition() > omw * 11.20){
                 loop = false;
@@ -746,10 +747,10 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
                 telemetry.update();
             }
 
-            LFdrive.setPower(pwr * (FollowPowerFront - FollowPowerTurn));
-            LBdrive.setPower(pwr * (FollowPowerFront - FollowPowerTurn));
-            RFdrive.setPower(pwr * (FollowPowerFront + FollowPowerTurn));
-            RBdrive.setPower(pwr * (FollowPowerFront + FollowPowerTurn));
+            LFdrive.setPower(pwr + (FollowPowerFront - FollowPowerTurn));
+            LBdrive.setPower(-pwr + (FollowPowerFront - FollowPowerTurn));
+            RFdrive.setPower(-pwr + (FollowPowerFront + FollowPowerTurn));
+            RBdrive.setPower(pwr + (FollowPowerFront + FollowPowerTurn));
         }
         LFdrive.setPower(0);
         LBdrive.setPower(0);
@@ -757,8 +758,55 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         RBdrive.setPower(0);
 
     }
-    public void DriveToLine() throws InterruptedException{
+    public void DriveToLineRight(double pwr, double threshold) throws InterruptedException{
+        boolean loop = true;
 
+        LightSensor Flight = hardwareMap.lightSensor.get("Flight");
+        LightSensor Blight = hardwareMap.lightSensor.get("Blight");
+        Flight.enableLed(true);
+        Blight.enableLed(true);
+
+        DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
+        DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
+        DcMotor LBdrive = hardwareMap.dcMotor.get("LBdrive");
+        DcMotor RFdrive = hardwareMap.dcMotor.get("RFdrive");
+        LFdrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        LBdrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        RFdrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        RBdrive.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        LFdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RFdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        idle();
+        LFdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LBdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RFdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RBdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        idle();
+
+        LFdrive.setPower(pwr);
+        LBdrive.setPower(pwr);
+        RFdrive.setPower(pwr);
+        RBdrive.setPower(pwr);
+
+        while (loop && opModeIsActive()){
+            telemetry.addData("LFdrive", LFdrive.getCurrentPosition());
+            telemetry.addData("LBdrive", LBdrive.getCurrentPosition());
+            telemetry.addData("RFdrive", RFdrive.getCurrentPosition());
+            telemetry.addData("RBdrive", RBdrive.getCurrentPosition());
+            telemetry.update();
+
+            if (Blight.getRawLightDetected() > threshold | Flight.getRawLightDetected() > threshold){
+                loop = false;
+            }
+        }
+        LFdrive.setPower(0);
+        LBdrive.setPower(0);
+        RFdrive.setPower(0);
+        RBdrive.setPower(0);
     }
 
     @Override public void runOpMode() throws InterruptedException {
@@ -766,19 +814,22 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         init_gyro();
         waitForStart();
 
-        ///*
+        /*
         Forward(130, 0.4);
         shoot();
-        Right_Gyro(44, 0.18, 0.62);
-        Forward(460, 0.4);
+        Right_Gyro(44, 0.18, 0.61);
+        Forward(500, 0.4);
         Left_Gyro(270, 0.19, 0.55);
 
+
+
+        DriveToLineRight(0.25, 1.9);
 
         FollowLeftLine(0.09, 1.9);
 
         Push();
-        //*/
-        FollowWallLeft(300, 0.3, 10);
+        */
+        FollowWallLeft(300, 0.3, 15);
         FollowRightLine(0.09, 0.3);
     }
 }
