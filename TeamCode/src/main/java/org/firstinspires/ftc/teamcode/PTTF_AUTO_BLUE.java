@@ -652,22 +652,22 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         sleep(50);
         boolean dosome = true;
         while (dosome && opModeIsActive()) {
-            if (/*Lcolor.blue() > Lcolor.red() &&*/ Rcolor.red() > Rcolor.blue()) {
+            if (Rcolor.red() > Rcolor.blue()) {
                 telemetry.addData("red < blue", "");
                 Left_Sideways(80, 0.3);
-                Reverse(40, 0.2);
-                Forward(20, 0.2);
+                Reverse(30, 0.2);
                 dosome = false;
             }
-            if (/*Lcolor.blue() < Lcolor.red() &&*/ Rcolor.red() < Rcolor.blue()) {
+            if (Rcolor.red() < Rcolor.blue() && dosome) {
                 telemetry.addData("red > blue", "");
                 Right_Sideways(100, 0.3);
-                Reverse(40, 0.2);
-                Forward(20, 0.2);
+                Reverse(30, 0.2);
                 dosome = false;
             }
-            telemetry.addData("red", Rcolor.red());
-            telemetry.addData("blue", Rcolor.blue());
+            telemetry.addData("r red", Rcolor.red());
+            telemetry.addData("r blue", Rcolor.blue());
+            telemetry.addData("l red", Lcolor.red());
+            telemetry.addData("l blue", Lcolor.blue());
             telemetry.update();
         }
     }
@@ -734,8 +734,8 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
             if (Lrange > afstand) FollowPowerFront = -0.1;
             if (Lrange < afstand) FollowPowerFront = 0.1;
 
-            if (Lrange > Rrange) FollowPowerTurn = -0.1;
-            if (Lrange < Rrange) FollowPowerTurn = 0.1;
+            if (Lrange > Rrange) FollowPowerTurn = -0.15;
+            if (Lrange < Rrange) FollowPowerTurn = 0.15;
             if (Lrange == Rrange) FollowPowerTurn = 0;
 
             //FollowPowerFront = 0;
@@ -813,23 +813,22 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
 
         init_gyro();
         waitForStart();
-
-        /*
+        ///*
         Forward(130, 0.4);
         shoot();
-        Right_Gyro(44, 0.18, 0.61);
-        Forward(500, 0.4);
-        Left_Gyro(270, 0.19, 0.55);
+        Right_Gyro(46, 0.18, 0.62);
+        Forward(490, 0.5);
+        Left_Gyro(270, 0.19, 0.57);
 
 
 
-        DriveToLineRight(0.25, 1.9);
+        DriveToLineRight(0.29, 1.9);
 
         FollowLeftLine(0.09, 1.9);
 
         Push();
-        */
-        FollowWallLeft(300, 0.3, 15);
+
+        FollowWallLeft(550, 0.4, 20);
         FollowRightLine(0.09, 0.3);
     }
 }

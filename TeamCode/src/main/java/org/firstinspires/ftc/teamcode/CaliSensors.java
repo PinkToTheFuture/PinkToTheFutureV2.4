@@ -70,8 +70,8 @@ public class CaliSensors extends LinearOpMode {
             telemetry.addData("Rultrasonic", Rrange);
             telemetry.addData("Lultrasonic", Lrange);
             telemetry.addData("gyro", gyro.getHeading());
-            telemetry.addData("Llight raw", Flight.getRawLightDetected());
-            telemetry.addData("Rlight deze", Blight.getRawLightDetected());
+            telemetry.addData("Flight ", Flight.getRawLightDetected());
+            telemetry.addData("Blight ", Blight.getRawLightDetected());
             telemetry.addData("Lcolor blue", Lcolor.blue());
             telemetry.addData("Lcolor red", Lcolor.red());
             telemetry.addData("Rcolor blue", Rcolor.blue());
