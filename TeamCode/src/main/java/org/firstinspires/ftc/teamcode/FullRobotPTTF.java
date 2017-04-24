@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="Full Robot Omni Drive", group="PinktotheFuture")
+@TeleOp(name="Full Robot", group="PinktotheFuture")
 
 public class FullRobotPTTF extends LinearOpMode {
 

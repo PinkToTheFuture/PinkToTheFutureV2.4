@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@Autonomous(name="Cali Encoders", group="PinktotheFuture")
+@Autonomous(name="Cali Encoders", group="cali")
 public class CaliEncoder extends LinearOpMode {
 
 

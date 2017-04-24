@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "Cali Sensor", group = "PinktotheFuture")
+@Autonomous(name = "Cali Sensor", group = "cali")
 
 public class CaliSensors extends LinearOpMode {
 
