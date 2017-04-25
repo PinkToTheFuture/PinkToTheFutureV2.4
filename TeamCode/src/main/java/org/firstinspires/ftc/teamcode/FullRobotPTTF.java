@@ -34,6 +34,7 @@ public class FullRobotPTTF extends LinearOpMode {
         Armrelease1.setPosition(0);
         Armrelease2.setPosition(0.9);
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
+
         shooterservoX.setPosition(0.5);
 
 
