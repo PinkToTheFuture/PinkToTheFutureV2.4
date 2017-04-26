@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-@Autonomous(name = "Only shoot normal start both", group = "shoot")
+@Autonomous(name = "Only shoot left start blue", group = "shoot")
 
-public class OnlyShootNormalStart extends LinearOpMode {
+public class  OnlyShootLeftStartBlue extends LinearOpMode {
     public void Forward(double omw, double pwr) throws InterruptedException{
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
@@ -43,7 +43,7 @@ public class OnlyShootNormalStart extends LinearOpMode {
         RFdrive.setTargetPosition((int) (omw * 11.20));
         RBdrive.setTargetPosition((int) (omw * 11.20));
 
-        
+
 
         while (loop && opModeIsActive()){
             telemetry.addData("LFdrive", LFdrive.getCurrentPosition());
@@ -117,6 +117,80 @@ public class OnlyShootNormalStart extends LinearOpMode {
         }
     }
 
+    private void Left_Sideways(double omw, double pwr) throws InterruptedException {
+        boolean loop = true;
+        DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
+        DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
+        DcMotor LBdrive = hardwareMap.dcMotor.get("LBdrive");
+        DcMotor RFdrive = hardwareMap.dcMotor.get("RFdrive");
+        LFdrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        LBdrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        RFdrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        RBdrive.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        LFdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RFdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        idle();
+        LFdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        LBdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RFdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RBdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        idle();
+
+        LFdrive.setPower(pwr);
+        LBdrive.setPower(pwr);
+        RFdrive.setPower(pwr);
+        RBdrive.setPower(pwr);
+
+        LFdrive.setTargetPosition((int) (omw * 11.20));
+        LBdrive.setTargetPosition((int) (omw * 11.20));
+        RFdrive.setTargetPosition((int) (omw * 11.20));
+        RBdrive.setTargetPosition((int) (omw * 11.20));
+
+        while (loop && opModeIsActive()){
+            telemetry.addData("LFdrive", LFdrive.getCurrentPosition());
+            telemetry.addData("LBdrive", LBdrive.getCurrentPosition());
+            telemetry.addData("RFdrive", RFdrive.getCurrentPosition());
+            telemetry.addData("RBdrive", RBdrive.getCurrentPosition());
+            telemetry.update();
+
+            if (LFdrive.getCurrentPosition() > RFdrive.getCurrentPosition()){
+                LFdrive.setPower(pwr * 0.75);
+            }
+            if (LFdrive.getCurrentPosition() < RFdrive.getCurrentPosition()){
+                LFdrive.setPower(pwr * 1.33);
+            }
+
+
+            if (LBdrive.getCurrentPosition() > RFdrive.getCurrentPosition()){
+                LBdrive.setPower(pwr * 0.75);
+            }
+            if (LBdrive.getCurrentPosition() < RFdrive.getCurrentPosition()){
+                LBdrive.setPower(pwr * 1.33);
+            }
+
+
+            if (RBdrive.getCurrentPosition() > RFdrive.getCurrentPosition()){
+                RBdrive.setPower(pwr * 0.75);
+            }
+            if (RBdrive.getCurrentPosition() < RFdrive.getCurrentPosition()){
+                RBdrive.setPower(pwr * 1.33);
+            }
+
+
+            if (LFdrive.getCurrentPosition() > (omw*11.20 - 40) && LBdrive.getCurrentPosition() > (omw*11.20 - 40) && RFdrive.getCurrentPosition() > (omw*11.20 - 40) && RBdrive.getCurrentPosition() > (omw*11.20 - 40)) {
+                loop = false;
+            }
+        }
+        LFdrive.setPower(0);
+        LBdrive.setPower(0);
+        RFdrive.setPower(0);
+        RBdrive.setPower(0);
+    }
+
 
 
     @Override public void runOpMode() throws InterruptedException {
@@ -129,9 +203,9 @@ public class OnlyShootNormalStart extends LinearOpMode {
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
         shooterservoX.setPosition(0.5);
 
-
         waitForStart();
         Forward(135, 0.4);
+        Left_Sideways(250, 0.4);
         shoot();
     }
 }

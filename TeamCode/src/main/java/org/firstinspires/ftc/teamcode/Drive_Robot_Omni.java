@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="Omni Drive victors rijden", group="PinktotheFuture")
+@TeleOp(name="Omni victors rijden", group="PinktotheFuture")
 @Disabled
 public class Drive_Robot_Omni extends LinearOpMode {
 

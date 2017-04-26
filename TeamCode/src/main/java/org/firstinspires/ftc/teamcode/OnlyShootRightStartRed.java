@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-@Autonomous(name = "Only shoot left start", group = "shoot")
+@Autonomous(name = "Only shoot right start red", group = "shoot")
 
-public class OnlyShootLeftStart extends LinearOpMode {
+public class  OnlyShootRightStartRed extends LinearOpMode {
     public void Forward(double omw, double pwr) throws InterruptedException{
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
@@ -77,6 +77,46 @@ public class OnlyShootLeftStart extends LinearOpMode {
         RBdrive.setPower(0);
 
     }
+
+    public void shoot() throws InterruptedException{
+        Servo shooterservoX = hardwareMap.servo.get("shooterservox");
+
+        TouchSensor shootertouch = hardwareMap.touchSensor.get("shootertouch");
+
+
+        DcMotor shooter = hardwareMap.dcMotor.get("shooter");
+        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        idle();
+        shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shooter.setPower(1);
+        shooter.setTargetPosition(2240);
+
+        boolean loop = true;
+        while (loop && opModeIsActive()){
+            if (shooter.getCurrentPosition() > 2220){
+                loop = false;
+            }
+        }
+
+        shooterservoX.setPosition(0.15);
+        sleep(200);
+        while (opModeIsActive() && !shootertouch.isPressed()){
+            idle();
+        }
+        shooterservoX.setPosition(0.5);
+
+
+        shooter.setTargetPosition(4480);
+
+        loop = true;
+        while (loop && opModeIsActive()){
+            if (shooter.getCurrentPosition() > 4460){
+                loop = false;
+            }
+        }
+    }
+
 
     private void Right_Sideways(double omw, double pwr) throws InterruptedException {
         boolean loop = true;
@@ -152,52 +192,19 @@ public class OnlyShootLeftStart extends LinearOpMode {
         RBdrive.setPower(0);
     }
 
-    public void shoot() throws InterruptedException{
-        Servo shooterservoX = hardwareMap.servo.get("shooterservox");
-
-        TouchSensor shootertouch = hardwareMap.touchSensor.get("shootertouch");
-
-
-        DcMotor shooter = hardwareMap.dcMotor.get("shooter");
-        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
-        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        idle();
-        shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        shooter.setPower(1);
-        shooter.setTargetPosition(2240);
-
-        boolean loop = true;
-        while (loop && opModeIsActive()){
-            if (shooter.getCurrentPosition() > 2220){
-                loop = false;
-            }
-        }
-
-        shooterservoX.setPosition(0.15);
-        sleep(170);
-        while (opModeIsActive() && !shootertouch.isPressed()){
-            idle();
-        }
-        shooterservoX.setPosition(0.5);
-
-
-        shooter.setTargetPosition(4480);
-
-        loop = true;
-        while (loop && opModeIsActive()){
-            if (shooter.getCurrentPosition() > 4460){
-                loop = false;
-            }
-        }
-    }
-
-
-
     @Override public void runOpMode() throws InterruptedException {
+        Servo Armservo = hardwareMap.servo.get("servoarm");
+        Armservo.setPosition(0.5);
+        Servo ArmreleaseL = hardwareMap.servo.get("servoarmreleaseL");
+        Servo ArmreleaseR = hardwareMap.servo.get("servoarmreleaseR");
+        ArmreleaseL.setPosition(1);
+        ArmreleaseR.setPosition(1);
+        Servo shooterservoX = hardwareMap.servo.get("shooterservox");
+        shooterservoX.setPosition(0.5);
 
         waitForStart();
         Forward(135, 0.4);
-        Right_Sideways(100, 0.4);
+        Right_Sideways(250, 0.4);
         shoot();
     }
 }

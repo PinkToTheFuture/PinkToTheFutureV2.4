@@ -302,7 +302,7 @@ public class PTTF_AUTO_RED extends LinearOpMode {
         }
 
         shooterservoX.setPosition(0.15);
-        sleep(170);
+        sleep(200);
         while (opModeIsActive() && !shootertouch.isPressed()){
             idle();
         }

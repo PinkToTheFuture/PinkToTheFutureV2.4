@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,9 +8,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-@Autonomous(name = "Only shoot normal start both", group = "shoot")
+@Autonomous(name = "10 sec shoot corner blue", group = "corner")
 
-public class OnlyShootNormalStart extends LinearOpMode {
+public class TenSecShootCornerBlue extends LinearOpMode {
     public void Forward(double omw, double pwr) throws InterruptedException{
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
@@ -43,7 +44,7 @@ public class OnlyShootNormalStart extends LinearOpMode {
         RFdrive.setTargetPosition((int) (omw * 11.20));
         RBdrive.setTargetPosition((int) (omw * 11.20));
 
-        
+
 
         while (loop && opModeIsActive()){
             telemetry.addData("LFdrive", LFdrive.getCurrentPosition());
@@ -118,6 +119,74 @@ public class OnlyShootNormalStart extends LinearOpMode {
     }
 
 
+    private void Right_Gyro(double degrees, double pwr, double sloommultiplier) throws InterruptedException{
+        ModernRoboticsI2cGyro gyro = hardwareMap.get((ModernRoboticsI2cGyro.class), "gyro");
+
+
+        DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
+        DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
+        DcMotor LBdrive = hardwareMap.dcMotor.get("LBdrive");
+        DcMotor RFdrive = hardwareMap.dcMotor.get("RFdrive");
+        LFdrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        LBdrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        RFdrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        RBdrive.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        LFdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RFdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        idle();
+        LFdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LBdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RFdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RBdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+        while (opModeIsActive() && gyro.getHeading() < (degrees - 10) || gyro.getHeading() > 340){
+            LFdrive.setPower(pwr);
+            LBdrive.setPower(pwr);
+            RFdrive.setPower(-pwr);
+            RBdrive.setPower(-pwr);
+            idle();
+            telemetry.addData("gyro", gyro.getHeading());
+            telemetry.update();
+
+        }
+        boolean loop = true;
+        while (opModeIsActive() && loop){
+            while (opModeIsActive() && !(gyro.getHeading() == degrees)){
+                if (gyro.getHeading() > degrees) {
+                    LFdrive.setPower(-pwr * sloommultiplier);
+                    LBdrive.setPower(-pwr * sloommultiplier);
+                    RFdrive.setPower(pwr * sloommultiplier);
+                    RBdrive.setPower(pwr * sloommultiplier);
+                }
+                if (gyro.getHeading() < degrees) {
+                    LFdrive.setPower(pwr * sloommultiplier);
+                    LBdrive.setPower(pwr * sloommultiplier);
+                    RFdrive.setPower(-pwr * sloommultiplier);
+                    RBdrive.setPower(-pwr * sloommultiplier);
+                }
+                telemetry.addData("gyro", gyro.getHeading());
+                telemetry.update();
+            }
+            LFdrive.setPower(0);
+            LBdrive.setPower(0);
+            RFdrive.setPower(0);
+            RBdrive.setPower(0);
+            sleep(50);
+            if (gyro.getHeading() == degrees){
+                loop = false;
+            }
+        }
+        LFdrive.setPower(0);
+        LBdrive.setPower(0);
+        RFdrive.setPower(0);
+        RBdrive.setPower(0);
+
+    }
+
 
     @Override public void runOpMode() throws InterruptedException {
         Servo Armservo = hardwareMap.servo.get("servoarm");
@@ -133,5 +202,8 @@ public class OnlyShootNormalStart extends LinearOpMode {
         waitForStart();
         Forward(135, 0.4);
         shoot();
+        Right_Gyro(100, 0.29, 0.47);
+        Forward(300, 0.4);
+
     }
 }

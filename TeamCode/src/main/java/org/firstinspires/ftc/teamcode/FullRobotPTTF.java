@@ -29,12 +29,11 @@ public class FullRobotPTTF extends LinearOpMode {
 
         Servo Armservo = hardwareMap.servo.get("servoarm");
         Armservo.setPosition(0.5);
-        Servo Armrelease1 = hardwareMap.servo.get("servoarmrelease1");
-        Servo Armrelease2 = hardwareMap.servo.get("servoarmrelease2");
-        Armrelease1.setPosition(0);
-        Armrelease2.setPosition(0.9);
+        Servo ArmreleaseL = hardwareMap.servo.get("servoarmreleaseL");
+        Servo ArmreleaseR = hardwareMap.servo.get("servoarmreleaseR");
+        ArmreleaseL.setPosition(1);
+        ArmreleaseR.setPosition(1);
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
-
         shooterservoX.setPosition(0.5);
 
 
@@ -124,9 +123,14 @@ public class FullRobotPTTF extends LinearOpMode {
                 sweeperPower = gamepad2.right_trigger;
             }
 
-            if (gamepad2.back) {
-                Armrelease1.setPosition(0.3);
-                Armrelease2.setPosition(0.7);
+            if (gamepad2.dpad_down) {
+                ArmreleaseL.setPosition(0.5);
+                ArmreleaseR.setPosition(0.7);
+            }
+            
+            if (gamepad2.dpad_up) {
+                ArmreleaseL.setPosition(1);
+                ArmreleaseR.setPosition(1);
             }
 
 
@@ -141,11 +145,30 @@ public class FullRobotPTTF extends LinearOpMode {
                 }
             }
 
-            if (gamepad1.left_bumper){
+            if (gamepad2.left_bumper){
                 shooterservoX.setPosition(0.15);
-                sleep(170);
+                sleep(190);
                 while (opModeIsActive() && !shootertouch.isPressed()){
-                    idle();
+
+                    RFpower = -((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
+                    RBpower = -((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
+                    LFpower = -((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
+                    LBpower = -((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
+
+                    RFpower = RFpower - (gamepad1.right_stick_x);
+                    RBpower = RBpower - (gamepad1.right_stick_x);
+                    LFpower = LFpower + (gamepad1.right_stick_x);
+                    LBpower = LBpower + (gamepad1.right_stick_x);
+
+                    Range.clip(RFpower, -1, 1);
+                    Range.clip(RBpower, -1, 1);
+                    Range.clip(LFpower, -1, 1);
+                    Range.clip(LBpower, -1, 1);
+                    LFdrive.setPower(LFpower * fastency);
+                    RBdrive.setPower(RBpower * fastency);
+                    LBdrive.setPower(LBpower * fastency);
+                    RFdrive.setPower(RFpower * fastency);
+
                 }
                 shooterservoX.setPosition(0.5);
             }
@@ -157,7 +180,7 @@ public class FullRobotPTTF extends LinearOpMode {
                     idle();
                 }
                 shooterservoX.setPosition(0.15);
-                sleep(170);
+                sleep(190);
                 while (opModeIsActive() && !shootertouch.isPressed()){
                     idle();
                 }
