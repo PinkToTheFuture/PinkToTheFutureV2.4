@@ -639,12 +639,16 @@ public class PTTF_AUTO_RED extends LinearOpMode {
         RFdrive.setPower(pwr);
         RBdrive.setPower(pwr);
 
+        double heading;
         while (loop && opModeIsActive()){
+            heading = gyro.getHeading();
+
             Rrangesensorcache = Rrangereader.read(0x04, 2);
             int Rrange = Rrangesensorcache[0] & 0xFF;
 
             Lrangesensorcache = Lrangereader.read(0x04, 2);
             int Lrange = Lrangesensorcache[0] & 0xFF;
+
             telemetry.addData("Rultrasonic", Rrange);
             telemetry.addData("Lultrasonic", Lrange);
             telemetry.addData("LFdrive", LFdrive.getCurrentPosition());
@@ -656,10 +660,9 @@ public class PTTF_AUTO_RED extends LinearOpMode {
             if (Lrange > afstand) FollowPowerFront = -0.1;
             if (Lrange < afstand) FollowPowerFront = 0.1;
 
-            double tmp = gyro.getHeading();
-            if (tmp > 270) FollowPowerTurn = -0.15;
-            if (tmp < 270) FollowPowerTurn = 0.15;
-            if (tmp == 270) FollowPowerTurn = 0;
+            if (heading > 270) FollowPowerTurn = -0.15;
+            if (heading < 270) FollowPowerTurn = 0.15;
+            if (heading == 270) FollowPowerTurn = 0;
 
             //FollowPowerFront = 0;
             //FollowPowerTurn = 0;
