@@ -125,7 +125,7 @@ public class FullRobotPTTF extends LinearOpMode {
 
             if (gamepad2.dpad_down) {
                 ArmreleaseL.setPosition(0.35);
-                ArmreleaseR.setPosition(1);
+                ArmreleaseR.setPosition(0.5);
             }
             
             if (gamepad2.dpad_up) {
