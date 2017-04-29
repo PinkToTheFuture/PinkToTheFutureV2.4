@@ -79,7 +79,14 @@ public class OnlyShootNormalStart extends LinearOpMode {
     }
 
     public void shoot() throws InterruptedException{
+        Servo Armservo = hardwareMap.servo.get("servoarm");
+        Armservo.setPosition(0.5);
+        Servo ArmreleaseL = hardwareMap.servo.get("servoarmreleaseL");
+        Servo ArmreleaseR = hardwareMap.servo.get("servoarmreleaseR");
+        ArmreleaseL.setPosition(1);
+        ArmreleaseR.setPosition(0.5);
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
+        shooterservoX.setPosition(0.5);
 
         TouchSensor shootertouch = hardwareMap.touchSensor.get("shootertouch");
 

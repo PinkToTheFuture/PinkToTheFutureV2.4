@@ -275,7 +275,7 @@ public class TenSecShootCornerBlue extends LinearOpMode {
         Servo ArmreleaseL = hardwareMap.servo.get("servoarmreleaseL");
         Servo ArmreleaseR = hardwareMap.servo.get("servoarmreleaseR");
         ArmreleaseL.setPosition(1);
-        ArmreleaseR.setPosition(1);
+        ArmreleaseR.setPosition(0.5);
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
         shooterservoX.setPosition(0.5);
 
