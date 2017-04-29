@@ -184,9 +184,90 @@ public class TenSecShootCornerBlue extends LinearOpMode {
         LBdrive.setPower(0);
         RFdrive.setPower(0);
         RBdrive.setPower(0);
-
+    }
+    private void init_gyro() throws InterruptedException{
+        ModernRoboticsI2cGyro gyro = hardwareMap.get((ModernRoboticsI2cGyro.class), "gyro");
+        gyro.calibrate();
+        while (gyro.isCalibrating()){
+            idle();
+        }
+        telemetry.addData("gyro calibrated", gyro.status());
+        telemetry.update();
     }
 
+    private void Left_Sideways(double omw, double pwr) throws InterruptedException {
+        boolean loop = true;
+        DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
+        DcMotor RBdrive = hardwareMap.dcMotor.get("RBdrive");
+        DcMotor LBdrive = hardwareMap.dcMotor.get("LBdrive");
+        DcMotor RFdrive = hardwareMap.dcMotor.get("RFdrive");
+        LFdrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        LBdrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        RFdrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        RBdrive.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        LFdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RFdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RBdrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        idle();
+        LFdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        LBdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RFdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RBdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        idle();
+
+        LFdrive.setPower(pwr);
+        LBdrive.setPower(pwr);
+        RFdrive.setPower(pwr);
+        RBdrive.setPower(pwr);
+
+        LFdrive.setTargetPosition((int) (omw * 11.20));
+        LBdrive.setTargetPosition((int) (omw * 11.20));
+        RFdrive.setTargetPosition((int) (omw * 11.20));
+        RBdrive.setTargetPosition((int) (omw * 11.20));
+
+        while (loop && opModeIsActive()){
+            telemetry.addData("LFdrive", LFdrive.getCurrentPosition());
+            telemetry.addData("LBdrive", LBdrive.getCurrentPosition());
+            telemetry.addData("RFdrive", RFdrive.getCurrentPosition());
+            telemetry.addData("RBdrive", RBdrive.getCurrentPosition());
+            telemetry.update();
+
+            if (LFdrive.getCurrentPosition() > RFdrive.getCurrentPosition()){
+                LFdrive.setPower(pwr * 0.75);
+            }
+            if (LFdrive.getCurrentPosition() < RFdrive.getCurrentPosition()){
+                LFdrive.setPower(pwr * 1.33);
+            }
+
+
+            if (LBdrive.getCurrentPosition() > RFdrive.getCurrentPosition()){
+                LBdrive.setPower(pwr * 0.75);
+            }
+            if (LBdrive.getCurrentPosition() < RFdrive.getCurrentPosition()){
+                LBdrive.setPower(pwr * 1.33);
+            }
+
+
+            if (RBdrive.getCurrentPosition() > RFdrive.getCurrentPosition()){
+                RBdrive.setPower(pwr * 0.75);
+            }
+            if (RBdrive.getCurrentPosition() < RFdrive.getCurrentPosition()){
+                RBdrive.setPower(pwr * 1.33);
+            }
+
+
+            if (LFdrive.getCurrentPosition() > (omw*11.20 - 40) && LBdrive.getCurrentPosition() > (omw*11.20 - 40) && RFdrive.getCurrentPosition() > (omw*11.20 - 40) && RBdrive.getCurrentPosition() > (omw*11.20 - 40)) {
+                loop = false;
+            }
+        }
+        LFdrive.setPower(0);
+        LBdrive.setPower(0);
+        RFdrive.setPower(0);
+        RBdrive.setPower(0);
+    }
 
     @Override public void runOpMode() throws InterruptedException {
         Servo Armservo = hardwareMap.servo.get("servoarm");
@@ -198,9 +279,10 @@ public class TenSecShootCornerBlue extends LinearOpMode {
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
         shooterservoX.setPosition(0.5);
 
-
+        init_gyro();
         waitForStart();
         Forward(135, 0.4);
+        Left_Sideways(260, 0.4);
         shoot();
         Right_Gyro(100, 0.29, 0.47);
         Forward(300, 0.4);

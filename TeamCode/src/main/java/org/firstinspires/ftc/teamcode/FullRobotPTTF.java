@@ -32,7 +32,7 @@ public class FullRobotPTTF extends LinearOpMode {
         Servo ArmreleaseL = hardwareMap.servo.get("servoarmreleaseL");
         Servo ArmreleaseR = hardwareMap.servo.get("servoarmreleaseR");
         ArmreleaseL.setPosition(1);
-        ArmreleaseR.setPosition(1);
+        ArmreleaseR.setPosition(0.5);
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
         shooterservoX.setPosition(0.5);
 
@@ -124,8 +124,8 @@ public class FullRobotPTTF extends LinearOpMode {
             }
 
             if (gamepad2.dpad_down) {
-                ArmreleaseL.setPosition(0.5);
-                ArmreleaseR.setPosition(0.7);
+                ArmreleaseL.setPosition(0.35);
+                ArmreleaseR.setPosition(1);
             }
             
             if (gamepad2.dpad_up) {

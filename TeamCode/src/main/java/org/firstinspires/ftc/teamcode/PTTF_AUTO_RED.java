@@ -180,6 +180,7 @@ public class PTTF_AUTO_RED extends LinearOpMode {
             telemetry.update();
 
         }
+
         boolean loop = true;
         while (opModeIsActive() && loop){
             while (opModeIsActive() && !(gyro.getHeading() == degrees)){
@@ -195,7 +196,7 @@ public class PTTF_AUTO_RED extends LinearOpMode {
                     RFdrive.setPower(-pwr * sloommultiplier);
                     RBdrive.setPower(-pwr * sloommultiplier);
                 }
-                telemetry.addData("gyro", gyro.getHeading());
+                telemetry.addData("gyro loop2", gyro.getHeading());
                 telemetry.update();
             }
             LFdrive.setPower(0);
@@ -238,7 +239,7 @@ public class PTTF_AUTO_RED extends LinearOpMode {
         RBdrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
-        while (opModeIsActive() && (gyro.getHeading() < 180 || gyro.getHeading() > (degrees + 35))){
+        while (opModeIsActive() && (gyro.getHeading() < 180 || gyro.getHeading() > (degrees + 15))){
             RFdrive.setPower(pwr);
             RBdrive.setPower(pwr);
             LFdrive.setPower(-pwr);
@@ -301,6 +302,8 @@ public class PTTF_AUTO_RED extends LinearOpMode {
             }
         }
 
+
+
         shooterservoX.setPosition(0.15);
         sleep(200);
         while (opModeIsActive() && !shootertouch.isPressed()){
@@ -316,8 +319,8 @@ public class PTTF_AUTO_RED extends LinearOpMode {
                 loop = false;
             }
         }
-    }
 
+    }
     private void Left_Sideways(double omw, double pwr) throws InterruptedException {
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
@@ -819,9 +822,10 @@ public class PTTF_AUTO_RED extends LinearOpMode {
 
         Forward(130, 0.4);
         shoot();
-        Left_Gyro(314, 0.18, 0.61);
-        Forward(483, 0.5);
-        Right_Gyro(90, 0.29, 0.47);
+        Left_Gyro(315, 0.18, 0.62);
+        Forward(470, 0.5);
+        sleep(2000);
+        Right_Gyro(90, 0.32, 0.47);
 
         DriveToLineLeft(0.28, threshold);
 
