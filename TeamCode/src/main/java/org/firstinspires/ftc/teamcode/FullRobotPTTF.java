@@ -173,6 +173,7 @@ public class FullRobotPTTF extends LinearOpMode {
                 shooterservoX.setPosition(0.5);
             }
 
+
             if (gamepad1.right_bumper) {
                 shooterPosition = shooterPosition + 2240;
                 shooter.setTargetPosition(shooterPosition);
