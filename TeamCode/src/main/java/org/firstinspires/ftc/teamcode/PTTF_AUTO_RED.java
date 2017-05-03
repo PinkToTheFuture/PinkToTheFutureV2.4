@@ -816,15 +816,23 @@ public class PTTF_AUTO_RED extends LinearOpMode {
     @Override public void runOpMode() throws InterruptedException {
         double threshold = 1.9;
 
+        Servo Armservo = hardwareMap.servo.get("servoarm");
+        Armservo.setPosition(0.5);
+        Servo ArmreleaseL = hardwareMap.servo.get("servoarmreleaseL");
+        Servo ArmreleaseR = hardwareMap.servo.get("servoarmreleaseR");
+        ArmreleaseL.setPosition(1);
+        ArmreleaseR.setPosition(0.5);
+        Servo shooterservoX = hardwareMap.servo.get("shooterservox");
+        shooterservoX.setPosition(0.5);
 
         init_gyro();
         waitForStart();
 
         Forward(130, 0.4);
         shoot();
-        Left_Gyro(315, 0.18, 0.62);
+        Left_Gyro(315, 0.19, 0.7);
         Forward(470, 0.5);
-        sleep(2000);
+
         Right_Gyro(90, 0.32, 0.47);
 
         DriveToLineLeft(0.28, threshold);

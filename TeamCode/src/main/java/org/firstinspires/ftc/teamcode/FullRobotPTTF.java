@@ -229,6 +229,7 @@ public class FullRobotPTTF extends LinearOpMode {
             telemetry.addData("shooter encoder", shooter.getCurrentPosition());
             telemetry.addData("shootertouch", shootertouch.isPressed());
             telemetry.addData("shooterPosition", shooterPosition);
+            telemetry.addData("shots fired:", shooterPosition / 2240);
             telemetry.update();
 
         }
