@@ -1,15 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 import com.qualcomm.robotcore.util.Range;
+
+import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmLEngagePosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmLStartPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmREngagePosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmRStartPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoBackPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoForwardPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoStartPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.shooterservoXStartPosition;
 
 
 @TeleOp(name="Full Robot", group="PinktotheFuture")
@@ -18,23 +25,24 @@ public class FullRobotPTTF extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        double LFpower = 0;
-        double LBpower = 0;
-        double RFpower = 0;
-        double RBpower = 0;
+        double LFpower;
+        double LBpower;
+        double RFpower;
+        double RBpower;
         double fastency = 1;
         double geleiderPower = 0;
         double sweeperPower = 0;
         int shooterPosition = 0;
 
+
         Servo Armservo = hardwareMap.servo.get("servoarm");
-        Armservo.setPosition(0.5);
-        Servo ArmreleaseL = hardwareMap.servo.get("servoarmreleaseL");
-        Servo ArmreleaseR = hardwareMap.servo.get("servoarmreleaseR");
-        ArmreleaseL.setPosition(1);
-        ArmreleaseR.setPosition(0.5);
+        Armservo.setPosition(ArmservoStartPosition);
+        Servo releaseArmL = hardwareMap.servo.get("releasearmL");
+        Servo releaseArmR = hardwareMap.servo.get("releasearmR");
+        releaseArmL.setPosition(releaseArmLStartPosition);
+        releaseArmR.setPosition(releaseArmRStartPosition);
         Servo shooterservoX = hardwareMap.servo.get("shooterservox");
-        shooterservoX.setPosition(0.5);
+        shooterservoX.setPosition(shooterservoXStartPosition);
 
 
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");
@@ -84,32 +92,6 @@ public class FullRobotPTTF extends LinearOpMode {
 
 
 
-         /**   if (gamepad1.left_stick_x >= 0 && gamepad1.left_stick_y < 0){
-                LFpower = 1;
-                LBpower = Math.abs(gamepad1.left_stick_y) - gamepad1.left_stick_x;
-                RBpower = 1;
-                RFpower = Math.abs(gamepad1.left_stick_y) - gamepad1.left_stick_x;
-            }
-            if (gamepad1.left_stick_x > 0 && gamepad1.left_stick_y >= 0){
-                LFpower = gamepad1.left_stick_x - gamepad1.left_stick_y;
-                LBpower = -1;
-                RBpower = gamepad1.left_stick_x - gamepad1.left_stick_y;
-                RFpower = -1;
-            }
-            if (gamepad1.left_stick_x <= 0 && gamepad1.left_stick_y > 0){
-                LFpower = -1;
-                LBpower = -gamepad1.left_stick_y + Math.abs(gamepad1.left_stick_x);
-                RBpower = -1;
-                RFpower = -gamepad1.left_stick_y + Math.abs(gamepad1.left_stick_x);
-            }
-            if (gamepad1.left_stick_x < 0 && gamepad1.left_stick_y <= 0){
-                LFpower = gamepad1.left_stick_x + Math.abs(gamepad1.left_stick_y);
-                LBpower = 1;
-                RBpower = gamepad1.left_stick_x + Math.abs(gamepad1.left_stick_y);
-                RFpower = 1;
-            }
-          **/
-
             //RIGHT STICK
             RFpower = RFpower - (gamepad1.right_stick_x);
             RBpower = RBpower - (gamepad1.right_stick_x);
@@ -124,24 +106,24 @@ public class FullRobotPTTF extends LinearOpMode {
             }
 
             if (gamepad2.dpad_down) {
-                ArmreleaseL.setPosition(0.35);
-                ArmreleaseR.setPosition(0.5);
+                releaseArmL.setPosition(releaseArmLEngagePosition);
+                releaseArmR.setPosition(releaseArmREngagePosition);
             }
             
             if (gamepad2.dpad_up) {
-                ArmreleaseL.setPosition(1);
-                ArmreleaseR.setPosition(1);
+                releaseArmL.setPosition(releaseArmLStartPosition);
+                releaseArmR.setPosition(releaseArmRStartPosition);
             }
 
 
 
             if (gamepad2.b) {
-                Armservo.setPosition(1);
+                Armservo.setPosition(ArmservoForwardPosition);
             } else {
                 if (gamepad2.x){
-                    Armservo.setPosition(0);
+                    Armservo.setPosition(ArmservoBackPosition);
                 } else {
-                    Armservo.setPosition(0.5);
+                    Armservo.setPosition(ArmservoStartPosition);
                 }
             }
 

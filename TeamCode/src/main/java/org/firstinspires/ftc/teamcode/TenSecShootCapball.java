@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-@Autonomous(name = "match91", group = "shoot")
+@Autonomous(name = "10 sec shoot capball", group = "shoot")
 
-public class match91 extends LinearOpMode {
+public class TenSecShootCapball extends LinearOpMode {
     public void Forward(double omw, double pwr) throws InterruptedException{
         boolean loop = true;
         DcMotor LFdrive = hardwareMap.dcMotor.get("LFdrive");

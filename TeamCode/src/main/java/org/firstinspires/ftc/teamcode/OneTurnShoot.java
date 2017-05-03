@@ -26,6 +26,7 @@ public class OneTurnShoot extends LinearOpMode {
         }
         shooterservoX.setPosition(0.5);
 
+
         while (opModeIsActive()){
             if (gamepad1.dpad_up){
                 shooterservoX.setPosition(0.4);
