@@ -14,8 +14,6 @@ public interface RobotVariables {
     double shooterservoXStartPosition = 0.5;
 
 
-
-
     double releaseArmRStartPosition = 1;
     double releaseArmLStartPosition = 0.5;
     double releaseArmREngagePosition = 1;
