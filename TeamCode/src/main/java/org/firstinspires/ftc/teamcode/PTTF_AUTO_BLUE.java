@@ -14,6 +14,11 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoStartPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmLStartPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmRStartPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.shooterservoXStartPosition;
+
 @Autonomous(name = "AUTO BLUE", group = "full")
 
 public class PTTF_AUTO_BLUE extends LinearOpMode {
@@ -845,6 +850,18 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
     }
 
     @Override public void runOpMode() throws InterruptedException {
+
+
+        Servo Armservo = hardwareMap.servo.get("servoarm");
+        Armservo.setPosition(ArmservoStartPosition);
+        Servo releaseArmL = hardwareMap.servo.get("releasearmL");
+        Servo releaseArmR = hardwareMap.servo.get("releasearmR");
+        releaseArmL.setPosition(releaseArmLStartPosition);
+        releaseArmR.setPosition(releaseArmRStartPosition);
+        Servo shooterservoX = hardwareMap.servo.get("shooterservox");
+        shooterservoX.setPosition(shooterservoXStartPosition);
+
+
         double threshold = 1.9;
 
 
@@ -852,7 +869,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         waitForStart();
 
         Forward(130, 0.4);
-        shoot();
+        //shoot();
         Right_Gyro(46, 0.18, 0.61);
         Forward(483, 0.5);
         Left_Gyro(270, 0.29, 0.47);
@@ -864,7 +881,6 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         Push();
 
         FollowWallLeft(420, 0.45, 15, threshold);
-        FollowRightLine(0.09, 0.3);
         Push();
     }
 }
