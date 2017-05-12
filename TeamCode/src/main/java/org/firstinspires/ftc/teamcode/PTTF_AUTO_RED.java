@@ -623,8 +623,6 @@ public class PTTF_AUTO_RED extends LinearOpMode {
         RBdrive.setPower(0);
     }
 
-
-
     private void Push() throws InterruptedException{
         ColorSensor Lcolor = hardwareMap.colorSensor.get("lcolor");
         Lcolor.setI2cAddress(I2cAddr.create8bit(0x3c));
