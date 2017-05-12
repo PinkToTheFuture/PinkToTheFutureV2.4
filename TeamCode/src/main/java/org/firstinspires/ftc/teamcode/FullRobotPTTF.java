@@ -9,13 +9,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
+import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoStopPosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmLEngagePosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmLStartPosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmREngagePosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmRStartPosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoBackPosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoForwardPosition;
-import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoStartPosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.shooterservoXStartPosition;
 
 
@@ -36,7 +36,7 @@ public class FullRobotPTTF extends LinearOpMode {
 
 
         Servo Armservo = hardwareMap.servo.get("servoarm");
-        Armservo.setPosition(ArmservoStartPosition);
+        Armservo.setPosition(ArmservoStopPosition);
         Servo releaseArmL = hardwareMap.servo.get("releasearmL");
         Servo releaseArmR = hardwareMap.servo.get("releasearmR");
         releaseArmL.setPosition(releaseArmLStartPosition);
@@ -81,20 +81,15 @@ public class FullRobotPTTF extends LinearOpMode {
             geleiderPower = 0;
             sweeperPower = 0;
 
-
             RFpower = -((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
             RBpower = -((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
             LFpower = -((gamepad1.left_stick_y - gamepad1.left_stick_x) / 2);
             LBpower = -((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
 
-
-
-            //RIGHT STICK
             RFpower = RFpower - (gamepad1.right_stick_x);
             RBpower = RBpower - (gamepad1.right_stick_x);
             LFpower = LFpower + (gamepad1.right_stick_x);
             LBpower = LBpower + (gamepad1.right_stick_x);
-
 
             if (fastency < 0.7){
                 RFpower = RFpower - (gamepad1.right_stick_x * 0.8);
@@ -102,6 +97,7 @@ public class FullRobotPTTF extends LinearOpMode {
                 LFpower = LFpower + (gamepad1.right_stick_x * 0.8);
                 LBpower = LBpower + (gamepad1.right_stick_x * 0.8);
             }
+
 
 
 
@@ -130,7 +126,7 @@ public class FullRobotPTTF extends LinearOpMode {
                 if (gamepad2.x){
                     Armservo.setPosition(ArmservoBackPosition);
                 } else {
-                    Armservo.setPosition(ArmservoStartPosition);
+                    Armservo.setPosition(ArmservoStopPosition);
                 }
             }
 

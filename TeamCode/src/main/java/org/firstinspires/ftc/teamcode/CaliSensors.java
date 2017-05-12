@@ -57,6 +57,7 @@ public class CaliSensors extends LinearOpMode {
         while (gyro.isCalibrating()){
             idle();
         }
+        gyro.setHeadingMode(ModernRoboticsI2cGyro.HeadingMode.HEADING_CARDINAL);
 
         waitForStart();
 

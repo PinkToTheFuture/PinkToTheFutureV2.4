@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoStartPosition;
+import static org.firstinspires.ftc.teamcode.RobotVariables.ArmservoStopPosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmLStartPosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.releaseArmRStartPosition;
 import static org.firstinspires.ftc.teamcode.RobotVariables.shooterservoXStartPosition;
@@ -853,7 +853,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
 
 
         Servo Armservo = hardwareMap.servo.get("servoarm");
-        Armservo.setPosition(ArmservoStartPosition);
+        Armservo.setPosition(ArmservoStopPosition);
         Servo releaseArmL = hardwareMap.servo.get("releasearmL");
         Servo releaseArmR = hardwareMap.servo.get("releasearmR");
         releaseArmL.setPosition(releaseArmLStartPosition);
