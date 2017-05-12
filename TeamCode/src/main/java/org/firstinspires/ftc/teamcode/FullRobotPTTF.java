@@ -76,11 +76,8 @@ public class FullRobotPTTF extends LinearOpMode {
         while (opModeIsActive()) {
             waitOneFullHardwareCycle();
             if (gamepad1.dpad_up)     fastency = 1;
-            if (gamepad1.dpad_down)   fastency = 0.3;
-            RFpower = 0;
-            RBpower = 0;
-            LFpower = 0;
-            LBpower = 0;
+            if (gamepad1.dpad_down)   fastency = 0.4;
+
             geleiderPower = 0;
             sweeperPower = 0;
 
@@ -97,6 +94,16 @@ public class FullRobotPTTF extends LinearOpMode {
             RBpower = RBpower - (gamepad1.right_stick_x);
             LFpower = LFpower + (gamepad1.right_stick_x);
             LBpower = LBpower + (gamepad1.right_stick_x);
+
+
+            if (fastency < 0.7){
+                RFpower = RFpower - (gamepad1.right_stick_x * 0.8);
+                RBpower = RBpower - (gamepad1.right_stick_x * 0.8);
+                LFpower = LFpower + (gamepad1.right_stick_x * 0.8);
+                LBpower = LBpower + (gamepad1.right_stick_x * 0.8);
+            }
+
+
 
             if (gamepad2.left_trigger > 0.2){
                 sweeperPower = -gamepad2.left_trigger;
@@ -130,6 +137,7 @@ public class FullRobotPTTF extends LinearOpMode {
             if (gamepad2.left_bumper){
                 shooterservoX.setPosition(0.15);
                 sleep(190);
+
                 while (opModeIsActive() && !shootertouch.isPressed()){
 
                     RFpower = -((gamepad1.left_stick_y + gamepad1.left_stick_x) / 2);
@@ -170,17 +178,17 @@ public class FullRobotPTTF extends LinearOpMode {
                 shooterservoX.setPosition(0.5);
             }
 
-            if (gamepad1.dpad_up) {
+            if (gamepad1.dpad_right) {
                 shooterPosition = shooterPosition-80;
                 shooter.setTargetPosition(shooterPosition);
-                while (gamepad1.dpad_up){
+                while (gamepad1.dpad_right){
                     idle();
                 }
             }
-            if (gamepad1.dpad_down){
+            if (gamepad1.dpad_left){
                 shooterPosition = shooterPosition+80;
                 shooter.setTargetPosition(shooterPosition);
-                while (gamepad1.dpad_down){
+                while (gamepad1.dpad_left){
                     idle();
                 }
             }
