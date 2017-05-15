@@ -92,10 +92,10 @@ public class FullRobotPTTF extends LinearOpMode {
             LBpower = LBpower + (gamepad1.right_stick_x);
 
             if (fastency < 0.7){
-                RFpower = RFpower - (gamepad1.right_stick_x * 0.8);
-                RBpower = RBpower - (gamepad1.right_stick_x * 0.8);
-                LFpower = LFpower + (gamepad1.right_stick_x * 0.8);
-                LBpower = LBpower + (gamepad1.right_stick_x * 0.8);
+                RFpower = RFpower - (gamepad1.right_stick_x * 0.5);
+                RBpower = RBpower - (gamepad1.right_stick_x * 0.5);
+                LFpower = LFpower + (gamepad1.right_stick_x * 0.5);
+                LBpower = LBpower + (gamepad1.right_stick_x * 0.5);
             }
 
 
@@ -157,6 +157,9 @@ public class FullRobotPTTF extends LinearOpMode {
 
                 }
                 shooterservoX.setPosition(0.5);
+            }
+            if (gamepad2.right_bumper){
+                shooterservoX.setPosition(0.7);
             }
 
 

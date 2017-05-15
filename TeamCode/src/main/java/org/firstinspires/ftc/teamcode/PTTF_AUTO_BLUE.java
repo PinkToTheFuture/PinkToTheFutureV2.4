@@ -854,6 +854,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
 
         Servo Armservo = hardwareMap.servo.get("servoarm");
         Armservo.setPosition(ArmservoStopPosition);
+
         Servo releaseArmL = hardwareMap.servo.get("releasearmL");
         Servo releaseArmR = hardwareMap.servo.get("releasearmR");
         releaseArmL.setPosition(releaseArmLStartPosition);
@@ -869,10 +870,10 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
         waitForStart();
 
         Forward(130, 0.4);
-        //shoot();
+        shoot();
         Right_Gyro(46, 0.18, 0.61);
         Forward(483, 0.5);
-        Left_Gyro(270, 0.29, 0.47);
+        Left_Gyro(268, 0.29, 0.47);
 
         DriveToLineRight(0.28, threshold);
 
@@ -880,7 +881,7 @@ public class PTTF_AUTO_BLUE extends LinearOpMode {
 
         Push();
 
-        FollowWallLeft(420, 0.45, 15, threshold);
+        FollowWallLeft(420, 0.6, 15, threshold);
         Push();
     }
 }
